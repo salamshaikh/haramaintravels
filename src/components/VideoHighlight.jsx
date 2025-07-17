@@ -1,10 +1,6 @@
-import React, { useState } from 'react';
-import ModalVideo from 'react-modal-video';
-import 'react-modal-video/css/modal-video.css';
+import React from 'react';
 
 const VideoHighlight = () => {
-  const [isOpen, setOpen] = useState(false);
-
   return (
     <>
       {/* Video Section Background */}
@@ -28,20 +24,17 @@ const VideoHighlight = () => {
 
           {/* Video Play Button */}
           <div className="video-box1 text-center mt-4">
-            <button className="play-btn popup-video" onClick={() => setOpen(true)}>
+            <a
+              href="https://www.youtube.com/watch?v=ueIOUTyRS84"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="play-btn"
+            >
               <i className="fa-solid fa-play"></i>
-            </button>
+            </a>
           </div>
         </div>
       </div>
-
-      {/* Modal Video */}
-      <ModalVideo
-        channel="youtube"
-        isOpen={isOpen}
-        videoId="ueIOUTyRS84"
-        onClose={() => setOpen(false)}
-      />
     </>
   );
 };

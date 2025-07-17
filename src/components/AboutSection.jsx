@@ -1,9 +1,6 @@
 import React, { useState } from 'react';
-import ModalVideo from 'react-modal-video';
-import 'react-modal-video/css/modal-video.css';
 
 const AboutSection = () => {
-  const [isOpen, setOpen] = useState(false);
 
   return (
     <div className="about-area overflow-hidden space" id="about-sec">
@@ -107,22 +104,23 @@ const AboutSection = () => {
             </div>
 
             {/* Video Lightbox */}
-            <div className="video-wrapp" data-mask-src="/assets/img/shape/about-shape2.png">
-              <div
-                className="video-image style2"
-                style={{ backgroundImage: "url('/assets/img/bg/video_bg_2.jpg')" }}
+           {/* ✅ Replacement for Video Lightbox */}
+          <div className="video-wrapp" style={{ backgroundImage: "url('/assets/img/shape/about-shape2.png')" }}>
+            <div
+              className="video-image style2"
+              style={{ backgroundImage: "url('/assets/img/bg/video_bg_2.jpg')" }}
+            >
+              <a
+                href="https://www.youtube.com/watch?v=ueIOUTyRS84"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="play-btn"
               >
-                <button onClick={() => setOpen(true)} className="play-btn">
-                  <i className="fa-solid fa-play"></i>
-                </button>
-              </div>
+                <i className="fa-solid fa-play"></i>
+              </a>
             </div>
-            <ModalVideo
-              channel="youtube"
-              isOpen={isOpen}
-              videoId="ueIOUTyRS84" // You can change this to your brand video
-              onClose={() => setOpen(false)}
-            />
+          </div>
+
           </div>
         </div>
       </div>
