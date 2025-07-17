@@ -107,17 +107,11 @@ const AboutSection = () => {
            {/* ✅ Replacement for Video Lightbox */}
           <div className="video-wrapp" style={{ backgroundImage: "url('/assets/img/shape/about-shape2.png')" }}>
             <div
-              className="video-image style2"
+              className="video-image style2 "
+              
               style={{ backgroundImage: "url('/assets/img/bg/video_bg_2.jpg')" }}
             >
-              <a
-                href="https://www.youtube.com/watch?v=ueIOUTyRS84"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="play-btn"
-              >
-                <i className="fa-solid fa-play"></i>
-              </a>
+              
             </div>
           </div>
 

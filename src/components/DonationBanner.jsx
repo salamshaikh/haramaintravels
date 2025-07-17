@@ -17,7 +17,7 @@ const DonationBanner = () => {
               <div className="donate-counter-area2">
                 <span className="text">Goal:</span>
                 <h3 className="box-number">
-                  Rs
+                  Rs &nbsp;
                   <span className="counter-number">
                     <CountUp end={8000000} duration={3} separator="," />
                   </span>
@@ -25,7 +25,7 @@ const DonationBanner = () => {
 
                 <span className="text">Raised:</span>
                 <h3 className="box-number">
-                  Rs
+                  Rs &nbsp;
                   <span className="counter-number">
                     <CountUp end={6000000} duration={3} separator="," />
                   </span>
