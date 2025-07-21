@@ -6,7 +6,7 @@ const Contact = () => {
       
       {/* ============ Contact Info Area ============ */}
       <div className="space">
-        <div className="container">
+        {/* <div className="container">
           <div className="row gy-4">
             <div className="col-xl-4 col-lg-6">
               <div className="contact-media">
@@ -43,7 +43,7 @@ const Contact = () => {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
 
       {/* ============ Contact Form ============ */}
@@ -97,7 +97,7 @@ const Contact = () => {
       </div>
 
       {/* ============ Google Map ============ */}
-      <div className="contact-map">
+      {/* <div className="contact-map">
         <iframe
           title="Haramain Travels Location"
           src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3561.361618540435!2d78.07410347593784!3d27.18254524876813!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39747c7fc9e2c00d%3A0xa4d42076e37830a1!2sMedical%20Road%2C%20Aligarh%2C%20Uttar%20Pradesh%20202001%2C%20India!5e0!3m2!1sen!2sin!4v1721036000000"
@@ -108,7 +108,7 @@ const Contact = () => {
         <div className="contact-icon">
           <img src="assets/img/icon/location-dot.svg" alt="location marker" />
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

@@ -88,7 +88,7 @@ const AboutSection = () => {
               <a href="#services" className="th-btn style2">
                 <span className="btn-text" data-back="Discover More" data-front="Discover More"></span>
               </a>
-              <div className="call-info">
+              {/* <div className="call-info">
                 <div className="call-icon">
                   <a href="tel:+918979086182">
                     <i className="fa-solid fa-phone-volume"></i>
@@ -100,7 +100,7 @@ const AboutSection = () => {
                     <a href="tel:+918979086182">+91 89790 86182</a>
                   </p>
                 </div>
-              </div>
+              </div> */}
             </div>
 
             {/* Video Lightbox */}

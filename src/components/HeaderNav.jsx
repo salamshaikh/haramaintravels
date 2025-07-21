@@ -12,10 +12,10 @@ const HeaderNav = () => {
             <div className="col-auto d-none d-md-block">
               <div className="header-links">
                 <ul>
-                  <li><i className="far fa-phone"></i><a href="tel:+918979086182">+91-8979086182</a></li>
+                  {/* <li><i className="far fa-phone"></i><a href="tel:+918979086182">+91-8979086182</a></li>
                   <li className="d-none d-xl-inline-block">
                     <i className="far fa-location-dot"></i>Unit No. 2, Golden Pearl Guest House, Medical Road, Aligarh, UP – 202001
-                  </li>
+                  </li> */}
                   <li><i className="far fa-envelope"></i><a href="mailto:info@haramaintravels.in">info@haramaintravels.in</a></li>
                 </ul>
               </div>
