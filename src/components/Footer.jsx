@@ -21,7 +21,7 @@ const Footer = () => {
                 <div className="th-widget-about">
                   <div className="about-logo">
                     <a href="#hero">
-                      <img src="/assets/img/logo.png" alt="haramain-travels" />
+                      <img src="/assets/img/logo-white.png" alt="haramain-travels" />
                     </a>
                   </div>
                   <p className="about-text">

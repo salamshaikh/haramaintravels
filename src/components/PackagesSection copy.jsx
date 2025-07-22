@@ -5,11 +5,12 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 
 const packages = [
+  [
   {
-    img: "cousrse_2_1.jpg",
-    title: "July Umrah Package",
-    text: "A spiritual journey with comfort and care, designed for convenience from Delhi.",
-    features: [
+    "img": "cousrse_2_1.jpg",
+    "title": "July Umrah Package",
+    "text": "A spiritual journey with comfort and care, designed for convenience from Delhi.",
+    "features": [
       "Direct IndiGo Flight (From Delhi)",
       "Airport-Hotel-Haram Transfers",
       "Umrah Visa + Travel Insurance",
@@ -21,15 +22,15 @@ const packages = [
       "Quality hotels in Makkah & Madinah",
       "24/7 Shuttle to Haram"
     ],
-    price: "INR 80,000",
-    duration: "16 Days",
-    dates: "19 July – 03 August 2025"
+    "price": "INR 80,000",
+    "duration": "16 Days",
+    "dates": "19 July – 03 August 2025"
   },
   {
-    img: "cousrse_2_3.jpg",
-    title: "Deluxe Umrah Package",
-    text: "Premium Umrah experience with Saudia flights and deluxe hotel stays.",
-    features: [
+    "img": "cousrse_2_2.jpg",
+    "title": "Deluxe Umrah Package",
+    "text": "Premium Umrah experience with Saudia flights and deluxe hotel stays.",
+    "features": [
       "Direct Saudia Flight (Delhi – Jeddah)",
       "Hotels in Makkah (550m) & Madinah (150m)",
       "Umrah Visa + Travel Insurance",
@@ -41,10 +42,57 @@ const packages = [
       "Umrah Kit",
       "Accommodation Sharing 4/5 Pax in 1 Room"
     ],
-    price: "INR 99,000",
-    duration: "16 Days",
-    dates: "23 August – 07 September 2025"
+    "price": "INR 99,000",
+    "duration": "16 Days",
+    "dates": "23 August – 07 September 2025"
   }
+]
+
+  // {
+  //   img: 'cousrse_2_1.jpg',
+  //   title: 'Economy Hajj Package',
+  //   text: 'Perfect for budget-conscious pilgrims seeking a comfortable, spiritual journey.',
+  //   features: [
+  //     'Economy hotels within 5–7 km from Haram',
+  //     'Air-conditioned transport & group guidance',
+  //     'Shared accommodation in Mina & Arafat',
+  //     'Religious guidance from experienced scholars',
+  //     'Full board meals (Buffet & Boxed Meals)',
+  //   ],
+  //   price: 'INR 7,50,000',
+  //   duration: '22 Days',
+  //   dates: '10 June – 01 July 2025',
+  // },
+  // {
+  //   img: 'cousrse_2_2.jpg',
+  //   title: 'Silver Hajj Package',
+  //   text: 'A comfortable and upgraded Hajj experience with extra convenience.',
+  //   features: [
+  //     '3-star hotel within 2–3 km from Haram',
+  //     'Private air-conditioned buses for transportation',
+  //     'Upgraded tents in Mina with air conditioning',
+  //     'Full board meals with diverse cuisine',
+  //     'Support from expert Islamic scholars',
+  //   ],
+  //   price: 'INR 2,00,000',
+  //   duration: '24 Days',
+  //   dates: '08 June – 01 July 2025',
+  // },
+  // {
+  //   img: 'cousrse_2_3.jpg',
+  //   title: 'Gold Hajj Package',
+  //   text: 'A luxurious Hajj experience for pilgrims seeking premium comfort.',
+  //   features: [
+  //     '5-star hotels near Haram & Masjid Nabawi',
+  //     'VIP air-conditioned transport & dedicated staff',
+  //     'Private, air-conditioned tents in Mina',
+  //     'Open buffet with international cuisine',
+  //     'Exclusive sessions & personalized guidance',
+  //   ],
+  //   price: 'INR 10,00,000',
+  //   duration: '25 Days',
+  //   dates: '06 June – 01 July 2025',
+  // },
 ];
 
 const PackagesSection = () => {
@@ -97,7 +145,7 @@ const PackagesSection = () => {
                       </div>
                       <div className="divider"></div>
                       <div className="icon">
-                        <i className="fa-regular fa-hotel"></i> Hotel Class: {item.title.includes('Gold') ? '5★' : item.title.includes('Silver') ? '3★' : '5★'}
+                        <i className="fa-regular fa-hotel"></i> Hotel Class: {item.title.includes('Gold') ? '5★' : item.title.includes('Silver') ? '3★' : '2★'}
                       </div>
                     </div>
 

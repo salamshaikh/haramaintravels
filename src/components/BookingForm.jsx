@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import Select from 'react-select';
 import CountUp from 'react-countup';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -44,13 +43,9 @@ const BookingForm = () => {
     setErrors((prev) => ({ ...prev, [name]: null }));
   };
 
-  const handleSelect = (selectedOption) => {
-    setForm((prev) => ({ ...prev, service: selectedOption }));
-    setErrors((prev) => ({ ...prev, service: null }));
-  };
-
   const handleSubmit = (e) => {
     e.preventDefault();
+
     const validationErrors = validate();
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
@@ -58,18 +53,48 @@ const BookingForm = () => {
       return;
     }
 
-    console.log('Form Submitted:', form);
+    const fullName = form.name.trim().split(' ');
+    const firstName = fullName[0];
+    const lastName = fullName.slice(1).join(' ') || 'Client';
+    const selectedService = serviceOptions.find(opt => opt.value === form.service);
 
-    toast.success("Form submitted successfully!");
-    setForm({
-      name: '',
-      email: '',
-      number: '',
-      address: '',
-      passport: '',
-      service: null,
-    });
-    setErrors({});
+    const zohoData = new FormData();
+    zohoData.append('First Name', firstName);
+    zohoData.append('Last Name', lastName);
+    zohoData.append('Email', form.email);
+    zohoData.append('Mobile', form.number);
+    zohoData.append('City', form.address);
+    zohoData.append('Description', `
+      Service: ${selectedService?.label || ''}
+      Passport No: ${form.passport}
+    `);
+
+    // Required Zoho hidden fields
+    zohoData.append('xnQsjsdp', 'bf783a3b8d3d87e1d7263f744d301e258b1b414a38a8dc5043142ddf30dc67ad');
+    zohoData.append('xmIwtLD', '555b903c7fbf65f646063e230e255a5b698f6ab0100917f4956706f966756634196a6ce3f033ed8c5dd60d4506bff9c4');
+    zohoData.append('actionType', 'TGVhZHM=');
+    zohoData.append('returnURL', 'https://haramaintravels.in/thank-you');
+
+    fetch('https://crm.zoho.in/crm/WebToLeadForm', {
+      method: 'POST',
+      body: zohoData,
+      mode: 'no-cors'
+    })
+      .then(() => {
+        toast.success("Submitted to Zoho successfully!");
+        setForm({
+          name: '',
+          email: '',
+          number: '',
+          address: '',
+          passport: '',
+          service: null,
+        });
+        setErrors({});
+      })
+      .catch(() => {
+        toast.error("Failed to submit to Zoho. Please try again.");
+      });
   };
 
   return (
@@ -85,7 +110,6 @@ const BookingForm = () => {
               </div>
 
               <div className="row gx-16">
-                {/* Input Fields */}
                 {[
                   { name: 'name', placeholder: 'Full Name' },
                   { name: 'email', placeholder: 'Enter Email', type: 'email' },
@@ -106,19 +130,33 @@ const BookingForm = () => {
                   </div>
                 ))}
 
-                {/* Select Field */}
                 <div className="form-group col-12 mb-4">
-                  <Select
-                    options={serviceOptions}
-                    value={form.service}
-                    onChange={handleSelect}
-                    placeholder="Select Services"
-                    classNamePrefix="react-select"
-                  />
-                  {errors.service && <div className="text-danger mt-1">{errors.service}</div>}
+                  <select
+                    className={`form-control text-dark tw-w-full tw-px-4 tw-py-2 tw-border tw-rounded-md ${
+                      errors.service ? 'tw-border-red-500' : 'tw-border-gray-300'
+                    }`}
+                    style={{
+                      color: '#000',
+                      backgroundColor: '#fff',
+                    }}
+                    name="service"
+                    value={form.service || ''}
+                    onChange={(e) =>
+                      setForm((prev) => ({ ...prev, service: e.target.value }))
+                    }
+                  >
+                    <option value="">Select Services</option>
+                    {serviceOptions.map((opt) => (
+                      <option key={opt.value} value={opt.value}>
+                        {opt.label}
+                      </option>
+                    ))}
+                  </select>
+                  {errors.service && (
+                    <div className="invalid-feedback d-block">{errors.service}</div>
+                  )}
                 </div>
 
-                {/* Submit Button */}
                 <div className="form-btn col-12 mt-3">
                   <button type="submit" className="th-btn style1 w-100">
                     <span className="btn-text" data-back="Apply Now" data-front="Apply Now"></span>
@@ -127,7 +165,6 @@ const BookingForm = () => {
               </div>
             </form>
 
-            {/* Animated Counters */}
             <div className="package-counter-wrapp mt-40">
               {[
                 { value: 98, suffix: '%', label: 'Customer Satisfaction' },
@@ -145,7 +182,6 @@ const BookingForm = () => {
                 </div>
               ))}
             </div>
-
           </div>
         </div>
       </div>
