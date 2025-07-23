@@ -1,7 +1,60 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Contact = () => {
-  return (
+  const [form, setForm] = useState({
+    name: '',
+    email: '',
+    number: '',
+    service: '',
+    message: ''
+  });
+
+  const [errors, setErrors] = useState({});
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setForm((prev) => ({ ...prev, [name]: value }));
+    setErrors((prev) => ({ ...prev, [name]: null }));
+  };
+
+  const validate = () => {
+    const newErrors = {};
+    if (!form.name.trim()) newErrors.name = 'Name is required';
+    if (!/\S+@\S+\.\S+/.test(form.email)) newErrors.email = 'Valid email is required';
+    if (!form.number.trim() || form.number.length < 10) newErrors.number = 'Valid phone number is required';
+    if (!form.service) newErrors.service = 'Service selection is required';
+    if (!form.message.trim()) newErrors.message = 'Message is required';
+    return newErrors;
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const validationErrors = validate();
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      toast.error('Please fix the errors in the form.');
+      return;
+    }
+
+    try {
+      const res = await fetch('/api/contact-general', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form),
+      });
+
+      if (!res.ok) throw new Error('Failed to send');
+
+      toast.success('Message sent successfully!');
+      setForm({ name: '', email: '', number: '', service: '', message: '' });
+    } catch {
+      toast.error('Submission failed. Try again later.');
+    }
+  };
+return (
     <div>
       
       {/* ============ Contact Info Area ============ */}
@@ -51,33 +104,39 @@ const Contact = () => {
         <div className="container">
           <div className="row gx-0 gy-4">
             <div className="col-xl-6">
-              <form className="contact-form2 input-smoke ajax-contact">
+              <form className="contact-form2 input-smoke ajax-contact" onSubmit={handleSubmit}>
+                <ToastContainer position="top-right" autoClose={3000} />
                 <h3 className="h2">Send Us a Message</h3>
                 <div className="row">
                   <div className="form-group col-md-6">
-                    <input type="text" className="form-control" name="name" placeholder="Your Name*" required />
+                    <input type="text" className="form-control" name="name" placeholder="Your Name*" value={form.name} onChange={handleChange} />
+                    {errors.name && <small className="text-danger">{errors.name}</small>}
                   </div>
                   <div className="form-group col-md-6">
-                    <input type="tel" className="form-control" name="number" placeholder="Phone Number*" required />
+                    <input type="tel" className="form-control" name="number" placeholder="Phone Number*" value={form.number} onChange={handleChange} />
+                    {errors.number && <small className="text-danger">{errors.number}</small>}
                   </div>
                   <div className="form-group col-12">
-                    <input type="email" className="form-control" name="email" placeholder="Email Address*" required />
+                    <input type="email" className="form-control" name="email" placeholder="Email Address*" value={form.email} onChange={handleChange} />
+                    {errors.email && <small className="text-danger">{errors.email}</small>}
                   </div>
                   <div className="form-group col-12">
-                    <select name="service" className="form-select nice-select" required>
-                      <option value="" disabled selected hidden>Select Service</option>
-                      <option value="umrah-economy">Umrah Economy Package</option>
-                      <option value="umrah-premium">Umrah Premium Package</option>
-                      <option value="hajj-economy">Hajj Economy Package</option>
-                      <option value="hajj-gold">Hajj Gold Package</option>
-                      <option value="ziyarat-tour">Ziyarat Tour</option>
-                      <option value="visa">Visa Assistance</option>
-                      <option value="flight">Flight Booking</option>
-                      <option value="hotel">Hotel Booking</option>
+                    <select name="service" className="form-select nice-select" value={form.service} onChange={handleChange}>
+                      <option value="" disabled>Select Service</option>
+                      <option value="Umrah Economy Package">Umrah Economy Package</option>
+                      <option value="Umrah Premium Package">Umrah Premium Package</option>
+                      <option value="Hajj Economy Package">Hajj Economy Package</option>
+                      <option value="Hajj Gold Package">Hajj Gold Package</option>
+                      <option value="Ziyarat Tour">Ziyarat Tour</option>
+                      <option value="Visa Assistance">Visa Assistance</option>
+                      <option value="Flight Booking">Flight Booking</option>
+                      <option value="Hotel Booking">Hotel Booking</option>
                     </select>
+                    {errors.service && <small className="text-danger">{errors.service}</small>}
                   </div>
                   <div className="form-group col-12">
-                    <textarea name="message" cols="30" rows="4" className="form-control" placeholder="Your Message*" required></textarea>
+                    <textarea name="message" cols="30" rows="4" className="form-control" placeholder="Your Message*" value={form.message} onChange={handleChange}></textarea>
+                    {errors.message && <small className="text-danger">{errors.message}</small>}
                   </div>
                   <div className="form-btn col-12">
                     <button className="th-btn" type="submit">

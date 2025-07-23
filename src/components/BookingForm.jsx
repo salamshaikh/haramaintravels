@@ -21,7 +21,7 @@ const BookingForm = () => {
     number: '',
     address: '',
     passport: '',
-    service: null,
+    service: '',
   });
 
   const [errors, setErrors] = useState({});
@@ -43,7 +43,7 @@ const BookingForm = () => {
     setErrors((prev) => ({ ...prev, [name]: null }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const validationErrors = validate();
@@ -53,52 +53,33 @@ const BookingForm = () => {
       return;
     }
 
-    const fullName = form.name.trim().split(' ');
-    const firstName = fullName[0];
-    const lastName = fullName.slice(1).join(' ') || 'Client';
-    const selectedService = serviceOptions.find(opt => opt.value === form.service);
+    const selectedService = serviceOptions.find(opt => opt.value === form.service)?.label || '';
 
-    const zohoData = new FormData();
-    zohoData.append('First Name', firstName);
-    zohoData.append('Last Name', lastName);
-    zohoData.append('Email', form.email);
-    zohoData.append('Mobile', form.number);
-    zohoData.append('City', form.address);
-    zohoData.append('Description', `
-      Service: ${selectedService?.label || ''}
-      Passport No: ${form.passport}
-    `);
-
-    // Required Zoho hidden fields
-    zohoData.append('xnQsjsdp', 'bf783a3b8d3d87e1d7263f744d301e258b1b414a38a8dc5043142ddf30dc67ad');
-    zohoData.append('xmIwtLD', '555b903c7fbf65f646063e230e255a5b698f6ab0100917f4956706f966756634196a6ce3f033ed8c5dd60d4506bff9c4');
-    zohoData.append('actionType', 'TGVhZHM=');
-    zohoData.append('returnURL', 'https://haramaintravels.in/thank-you');
-
-    fetch('https://crm.zoho.in/crm/WebToLeadForm', {
-      method: 'POST',
-      body: zohoData,
-      mode: 'no-cors'
-    })
-      .then(() => {
-        toast.success("Submitted to Zoho successfully!");
-        setForm({
-          name: '',
-          email: '',
-          number: '',
-          address: '',
-          passport: '',
-          service: null,
-        });
-        setErrors({});
-      })
-      .catch(() => {
-        toast.error("Failed to submit to Zoho. Please try again.");
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...form, service: selectedService }),
       });
+
+      if (!response.ok) throw new Error('Failed');
+
+      toast.success("Form submitted successfully!");
+      setForm({
+        name: '',
+        email: '',
+        number: '',
+        address: '',
+        passport: '',
+        service: '',
+      });
+    } catch (error) {
+      toast.error("Submission failed. Please try again.");
+    }
   };
 
   return (
-    <section className="overflow-hidden py-5 my-5" data-pos-for=".video-area" data-sec-pos="top-half">
+    <section className="overflow-hidden py-5 my-5">
       <ToastContainer position="top-right" autoClose={3000} />
       <div className="container">
         <div className="package-area">
@@ -135,15 +116,10 @@ const BookingForm = () => {
                     className={`form-control text-dark tw-w-full tw-px-4 tw-py-2 tw-border tw-rounded-md ${
                       errors.service ? 'tw-border-red-500' : 'tw-border-gray-300'
                     }`}
-                    style={{
-                      color: '#000',
-                      backgroundColor: '#fff',
-                    }}
+                    style={{ color: '#000', backgroundColor: '#fff' }}
                     name="service"
-                    value={form.service || ''}
-                    onChange={(e) =>
-                      setForm((prev) => ({ ...prev, service: e.target.value }))
-                    }
+                    value={form.service}
+                    onChange={handleChange}
                   >
                     <option value="">Select Services</option>
                     {serviceOptions.map((opt) => (
